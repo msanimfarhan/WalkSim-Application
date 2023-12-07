@@ -1,0 +1,23 @@
+1. Class: Coordinate
+Code Smell: The fields x and y needs to be  package-private
+Refactoring: Change the access level of x and y to private and provide getter methods for accessing these fields.
+
+2 Class: FloatMatrix
+Code Smell: The use of DEFAULT_SIZE as a magic number for default matrix size.
+Refactoring: Replacing the magic number with a named constant.
+
+3. Class: BreadCrumbWalker
+Code Smell: Shares a lot of code with RandomWalker has duplicate methods
+
+4. class MarkovChain
+code smell: has high coupling with float matrix
+refractoring: introduce a interface for reducing the coupling
+
+5.  Class RandomWalker
+code smell : as there is less code used in both BreadCrumb and spiralWalker there is no need of inheritance
+referactoring: RandomWalker can be used in both classes as a field for common funtionality use between BreadCrumbWalker and spiralWalker
+
+6. class WalkSim:
+code smell: Main method has to many functions and work
+refractioring: code can be divided into  objects and method.
+

@@ -73,11 +73,22 @@ public class RandomWalker {
     public void saveWalkToFile(String fname) throws IOException {
         PrintWriter writer = new PrintWriter(fname);
 
-        for (Coordinate coord : path) {
-            writer.println(String.format("(%d, %d)", coord.x, coord.y));
-        }
 
+        if (fname.endsWith(".txt")) {
+            for (Coordinate coord : path) {
+                writer.println(String.format("(%d, %d)", coord.x, coord.y));
+            }
+        } else if (fname.endsWith(".dat")) {
+            StringBuilder sb = new StringBuilder();
+            for (Coordinate coord : path) {
+                if (sb.length() > 0) sb.append(" ");
+                sb.append(coord.x).append(" ").append(coord.y);
+            }
+            writer.println(sb.toString());
+        }
         writer.close();
+
+
     }
 
     /**

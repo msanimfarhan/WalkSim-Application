@@ -1,6 +1,8 @@
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * A main class for orchestrating a random walk.
@@ -17,12 +19,59 @@ public class WalkSim {
      *    [2]: the number of steps to simulate
      */
     public static void main(String[] args) {
+        Scanner kb = new Scanner(System.in);
+        int nSteps;
+        int walkerType;
+        while(true){
+            System.out.println("Enter an integer");
+            if(kb.hasNextInt()) {
+                 nSteps = kb.nextInt();
 
-        String exampleFile = "test_cases/example1.txt";
-        String outputFile = "output1.txt";
+                while(true) {
+                    System.out.println("Enter an integer  walker type");
 
-        int nSteps = 200;
-        int walkerType = 0;
+                    if (kb.hasNextInt()) {
+                         walkerType = kb.nextInt();
+                        break;
+                    }
+                }
+                break;
+
+
+            }
+
+        }
+        String exampleFile;
+        while(true){
+            System.out.println("Enter file name");
+             exampleFile = kb.next();
+            String s = "test_cases/";
+            exampleFile = s+exampleFile;
+
+            try {
+                // Attempt to open the file
+                Scanner scanner = new Scanner(new File(exampleFile));
+                System.out.println("The file exists and was opened successfully.");
+
+                // Close the scanner if the file is successfully opened
+                scanner.close();
+                break;
+            } catch (FileNotFoundException e) {
+                System.out.println("The file does not exist.");
+            }
+
+        }
+
+
+//        String exampleFile = "test_cases/example1.txt";
+        System.out.println("Enter output file name");
+       String outputFile = kb.next();
+        String x = "test_cases/";
+        outputFile = x+outputFile;
+
+//        int nSteps = 200;
+//        int walkerType = 0;
+
 
         int stepDuration = 30; //controls the speed of the animation
 
@@ -58,11 +107,25 @@ public class WalkSim {
             assert T1.rows() == 4 : "Walker MarkovChain should have 4 states";
             System.out.println(T1.prettyString());
             MarkovChain mc = new MarkovChain(T1, cardinals);
-            RandomWalker walker = new RandomWalker(mc);
+            ArrayList<Coordinate> theWalk = null;
+            if(walkerType == 0) {
+                RandomWalker walker = new RandomWalker(mc);
 
-            ArrayList<Coordinate> theWalk = walker.walk(nSteps);
-            walker.saveWalkToFile(outputFile);
+                theWalk = walker.walk(nSteps);
+                walker.saveWalkToFile(outputFile);
+            }
+            else if(walkerType == 1){
+                SpiralWalker walker = new SpiralWalker(mc);
 
+                theWalk = walker.walk(nSteps);
+                walker.saveWalkToFile(outputFile);
+            }else if(walkerType == 2){
+                BreadCrumbWalker walker = new BreadCrumbWalker(mc);
+
+                theWalk = walker.walk(nSteps);
+                walker.saveWalkToFile(outputFile);
+
+            }
             WalkFrame walkFrame = new WalkFrame();
             walkFrame.animatePath(theWalk, stepDuration);
 

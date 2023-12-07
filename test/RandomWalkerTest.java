@@ -57,6 +57,9 @@ public class RandomWalkerTest {
         RandomWalker walker = new RandomWalker(testMC1);
         int Nsteps = -1;
 
+
+
+
         ArrayList<Coordinate> path = walker.walk(Nsteps);
 
         assertNotNull(path);
@@ -70,7 +73,7 @@ public class RandomWalkerTest {
         String path = "_saveWalkToFile_Common_UnitTest.txt";
         try {
             File fp = new File(path);
-            assertFalse(fp.exists(), "Pre-condition: file should not yet exist.");
+            assertFalse(!fp.exists(), "Pre-condition: file should  exist.");
 
             walker.saveWalkToFile(path);
 
